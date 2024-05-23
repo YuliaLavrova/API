@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 public class JsonplaceholderTypicode {
 
     @BeforeMethod
-    public void setUp(){
+    public void url(){
         RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
     }
 
@@ -41,7 +41,6 @@ public class JsonplaceholderTypicode {
         assertEquals(response.statusCode(), 200);
         assertEquals(response.getHeader("Server"), "cloudflare");
         assertEquals(response.jsonPath().getString("title"), "sunt aut facere repellat provident occaecati excepturi optio reprehenderit");
-
     }
 
     @Test
