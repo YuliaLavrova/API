@@ -29,7 +29,7 @@ public class JsonplaceholderTypicode {
         given().log().all()
                 .when().get("/posts")
                 .then().log().all().statusCode(200)
-                .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("src/test/java/resources/jsonschema.json"));
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("json/jsonschema.json"));
 
     }
 
