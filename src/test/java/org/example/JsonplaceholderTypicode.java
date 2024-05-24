@@ -6,7 +6,6 @@ import static org.testng.AssertJUnit.assertEquals;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import java.io.File;
@@ -20,7 +19,7 @@ import org.testng.annotations.Test;
 public class JsonplaceholderTypicode {
 
     @BeforeMethod
-    public void url(){
+    public void url() {
         RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
     }
 
@@ -28,9 +27,7 @@ public class JsonplaceholderTypicode {
     public void getTest() {
         given().log().all()
                 .when().get("/posts")
-                .then().log().all().statusCode(200)
-                .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("json/jsonschema.json"));
-
+                .then().log().all().statusCode(200);
     }
 
     @Test
@@ -54,7 +51,7 @@ public class JsonplaceholderTypicode {
 
     @Test
     public void putTest() {
-        Map<String,String> bodyInfo = new HashMap<String, String>();
+        Map<String, String> bodyInfo = new HashMap<>();
         bodyInfo.put("title", "sunt aut facere repellat provident occaecati excepturi optio reprehenderit");
         bodyInfo.put("text", "Quid quid latine dictum sit, altum viditur");
         Response response = given().log().all().contentType(ContentType.JSON).body(bodyInfo)
@@ -69,6 +66,14 @@ public class JsonplaceholderTypicode {
                 .when().delete("/posts/1")
                 .then().log().all().extract().response();
         assertEquals(response.statusCode(), 200);
+    }
+
+    @Test
+    public void getJsonSchemaValidationTest() {
+        given().log().all()
+                .when().get("/posts/7")
+                .then().log().all().statusCode(200)
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("json/jsonschema.json"));
     }
 
 }
